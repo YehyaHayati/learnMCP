@@ -10,9 +10,13 @@ client = MultiServerMCPClient({
     #     "transport":"streamable_http",
     #     "url":"http://localhost:8000/mcp/"
     # },
-    "Github": {
-        "transport": "streamable_http",
-        "url": "https://api.githubcopilot.com/mcp/"
+    # "Github": {
+    #     "transport": "streamable_http",
+    #     "url": "https://api.githubcopilot.com/mcp/"
+    # },
+    "context7": {
+      "transport": "streamable_http",
+      "url": "https://mcp.context7.com/mcp"
     }
     # "Calculator": {
     #     "transport":"streamable_http",
@@ -24,13 +28,16 @@ async def main():
     tools = await client.get_tools()
     agent = create_react_agent(model=ChatOpenAI(), tools=tools, verbose=True)
     # question = "What is the stock of AAPL, tell me all of the information, and calculate the difference between High and Low."
-    question = "Get me the readme of the repo MohammadYehya/GridForge."
+    # question = "Get me the readme of the repo MohammadYehya/GridForge."
+    question = "Get me the latest version of NextJS."
     print(question)
     res = await agent.ainvoke({"messages":question})
     # for r in res['messages']:
     #     print("_"*50)
     #     print(r)
-    print(res['messages'][-1].content)
+    # print(res['messages'])
+    for msg in res['messages']:
+        print(msg, end='\n\n')
     
 
 asyncio.run(main())
